@@ -1,22 +1,29 @@
 package validation
 
 import (
-	"carefree/app/agreement"
-	"errors"
+	"github.com/go-playground/validator/v10"
+	"sync"
 )
 
 type DemoValidation struct {
 }
 
-func NewDemoValidation() *DemoValidation {
-	return &DemoValidation{}
-}
+var (
+	demoValidation     *DemoValidation
+	demoValidationOnce sync.Once
+)
 
-func (v *DemoValidation) HomeValidate(params agreement.HomeRequest) (err error) {
-	if params.Uid == 0 {
-		err = errors.New("uid is required")
-		return err
+func NewDemoValidation() *DemoValidation {
+	if demoValidation == nil {
+		demoValidationOnce.Do(func() {
+			demoValidation = &DemoValidation{}
+		})
 	}
 
-	return nil
+	return demoValidation
+}
+
+func (v *DemoValidation) Handle(fl validator.FieldLevel) (result bool) {
+
+	return true
 }

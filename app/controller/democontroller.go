@@ -2,7 +2,6 @@ package controller
 
 import (
 	"carefree/app/agreement"
-	"carefree/app/validation"
 	"fmt"
 	"github.com/carefreex-io/xhttp"
 	"github.com/gin-gonic/gin"
@@ -31,11 +30,6 @@ func (c *DemoController) Home(ctx *gin.Context) {
 	params := agreement.HomeRequest{}
 
 	if err := ctx.ShouldBindJSON(&params); err != nil {
-		xhttp.BadRequestResponse(ctx, err)
-		return
-	}
-
-	if err := validation.NewDemoValidation().HomeValidate(params); err != nil {
 		xhttp.BadRequestResponse(ctx, err)
 		return
 	}

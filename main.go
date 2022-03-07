@@ -3,6 +3,7 @@ package main
 import (
 	"carefree/app/daemon"
 	"carefree/app/middleware"
+	"carefree/app/validation"
 	"carefree/router"
 	"github.com/carefreex-io/config"
 	"github.com/carefreex-io/dbdao/gormdb"
@@ -22,6 +23,8 @@ func main() {
 	daemon.RunStartBeforeFn()
 
 	http := xhttp.NewXHttp()
+
+	validation.RegisterValidation()
 
 	middleware.Register(http.Engine)
 
